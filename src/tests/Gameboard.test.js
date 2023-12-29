@@ -26,18 +26,37 @@ test("Gameboard array created", () => {
 });
 
 describe("Valid placement", () => {
+  test("Coordinate out of board", () => {
+    expect(gameboard.checkValidPlacement(5, "h", [0, 9])).toBe(false);
+  });
 
-    test("Coordinate out of board", () => {
-      expect(gameboard.checkValidPlacement(5, "h", [0, 9])).toBe(false);
-    });
+  test("Horizontal: Ship is placed in valid coordinate", () => {
+    expect(gameboard.checkValidPlacement(5, "h", [4, 4])).toBe(true);
+  });
 
-    test("Horizontal: Ship is placed in valid coordinate", () => {
-        expect(gameboard.checkValidPlacement(5, "h", [4, 4])).toBe(true);
-    });
-
-    test("Vertical: Ship is placed in valid coordinate", () => {
-          expect(gameboard.checkValidPlacement(5, "v", [4, 4])).toBe(true);
-    });
+  test("Vertical: Ship is placed in valid coordinate", () => {
+    expect(gameboard.checkValidPlacement(5, "v", [4, 4])).toBe(true);
+  });
 });
 
+test("Ship placement", () => {
+  gameboard.placeShip(5, "v", [4, 4]);
+  console.log(gameboard.getBoard());
+});
 
+describe("Hit test", () => {
+  test("Hit missed", () => {
+    gameboard.receiveHit([0, 0]);
+    expect(gameboard.getBoard()[0][0]).toBe(0); //-1 for water, 0 for missed hit and 1 for damage
+  });
+
+  test("Ship hit", () => {
+    gameboard.receiveHit([4, 4]);
+    expect(gameboard.getBoard()[4][4]).toBe(1);
+    console.log(gameboard.getBoard());
+  });
+
+  test("Hit in same place twice", () => {
+    expect(gameboard.receiveHit([0, 0])).toBe(false);
+  });
+});
