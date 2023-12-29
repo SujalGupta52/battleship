@@ -60,3 +60,17 @@ describe("Hit test", () => {
     expect(gameboard.receiveHit([0, 0])).toBe(false);
   });
 });
+
+describe("Ship sunk test", () => {
+  test("All ship sunk: false", () => {
+    expect(gameboard.isShipsSunk()).toBe(false);
+  });
+
+  test("All ship sunk: true", () => {
+    gameboard.receiveHit([2, 4]);
+    gameboard.receiveHit([3, 4]);
+    gameboard.receiveHit([5, 4]);
+    gameboard.receiveHit([6, 4]);
+    expect(gameboard.isShipsSunk()).toBe(true);
+  });
+});
