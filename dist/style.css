@@ -1,0 +1,69 @@
+@font-face {
+    font-family: 'Comic-Font';
+    src: url(./Browood-Regular.ttf);
+}
+
+html,body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: rgb(255, 219, 110);
+}
+
+.start-menu .title {
+    font-family: 'Comic-Font';
+    height: 30vh;
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.start-menu .instruction {
+    height: 20vh;
+    font-family: 'Comic-Font';
+    color: rgb(255, 111, 0);
+    font-size: 2.5rem;
+    padding: 20px;
+    line-height: 3rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-menu .ai {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Comic-Font';
+    font-size: 2rem;
+}
+
+.start-menu .btn-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.start-menu #play-ai {
+    height: 2rem;
+    width: 2rem;
+}
+
+.start-menu .start-btn {
+    height: 10vh;
+    width: 40vh;
+    border: 4px solid rgb(216, 87, 0);
+    background-color: orange;
+    border-radius: 40px;
+    font-size: 2.5rem;
+    font-family: 'Comic-Font';
+}
