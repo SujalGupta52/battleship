@@ -34,14 +34,32 @@ export default class Gameboard {
       coordinate[1] < 0
     )
       return false;
+
+    let flag = false;
     if (rotation === "h") {
       if (coordinate[1] - mid < 0 || coordinate[1] + (size - mid) > this.size)
         return false;
+
+      for (
+        let i = coordinate[1] - mid;
+        i < coordinate[1] + (size - mid);
+        i += 1
+      ) {
+        if (typeof this.gameboardArray[coordinate[0]][i] === "object") return false;
+      }
     }
 
     if (rotation === "v") {
       if (coordinate[0] - mid < 0 || coordinate[0] + (size - mid) > this.size)
         return false;
+
+      for (
+        let i = coordinate[0] - mid;
+        i < coordinate[0] + (size - mid);
+        i += 1
+      ) {
+        if (typeof this.gameboardArray[i][coordinate[0]] === "object") return false;
+      }
     }
 
     return true;
@@ -81,7 +99,7 @@ export default class Gameboard {
       this.gameboardArray[x][y].hit();
       this.gameboardArray[x][y] = 1;
       return "hit";
-    } 
+    }
     if (this.gameboardArray[x][y] === -1) {
       this.gameboardArray[x][y] = 0;
       return "miss";
