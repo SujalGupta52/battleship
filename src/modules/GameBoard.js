@@ -1,4 +1,4 @@
-import Ship from "./Ship";
+import Ship from "./Ship.js";
 
 export default class Gameboard {
   constructor(size) {
@@ -76,15 +76,17 @@ export default class Gameboard {
     const x = coordinate[0];
     const y = coordinate[1];
     if (this.gameboardArray[x][y] === 0 || this.gameboardArray[x][y] === 1)
-      return false;
-
+      return "invalid";
     if (typeof this.gameboardArray[x][y] === "object") {
       this.gameboardArray[x][y].hit();
       this.gameboardArray[x][y] = 1;
-    } else {
+      return "hit";
+    } 
+    if (this.gameboardArray[x][y] === -1) {
       this.gameboardArray[x][y] = 0;
+      return "miss";
     }
-    return true;
+    return null;
   }
 
   isShipsSunk() {

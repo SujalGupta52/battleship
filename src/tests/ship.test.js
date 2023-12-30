@@ -1,4 +1,4 @@
-import Ship from  '../modules/Ship'
+import Ship from  '../modules/Ship.js'
 
 const ship = new Ship(2)
 

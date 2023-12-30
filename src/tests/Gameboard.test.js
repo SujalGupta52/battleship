@@ -1,4 +1,4 @@
-import Gameboard from "../modules/GameBoard";
+import Gameboard from "../modules/GameBoard.js";
 
 let gameboard = new Gameboard(8);
 let mockBoard = (() => {
@@ -46,18 +46,17 @@ test("Ship placement", () => {
 
 describe("Hit test", () => {
   test("Hit missed", () => {
-    gameboard.receiveHit([0, 0]);
+    expect(gameboard.receiveHit([0, 0])).toBe('miss');
     expect(gameboard.getBoard()[0][0]).toBe(0); //-1 for water, 0 for missed hit and 1 for damage
   });
 
   test("Ship hit", () => {
-    gameboard.receiveHit([4, 4]);
+    expect(gameboard.receiveHit([4, 4])).toBe('hit');
     expect(gameboard.getBoard()[4][4]).toBe(1);
-    console.log(gameboard.getBoard());
   });
 
   test("Hit in same place twice", () => {
-    expect(gameboard.receiveHit([0, 0])).toBe(false);
+    expect(gameboard.receiveHit([0, 0])).toBe('invalid');
   });
 });
 
