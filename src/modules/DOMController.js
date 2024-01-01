@@ -43,7 +43,7 @@ export default class DOMController {
     const infomation = document.createElement("div");
     const player = document.createElement("div");
     const playerName = document.createElement("span");
-    const text = document.createElement('span');
+    const text = document.createElement("span");
     const comment = document.createElement("div");
 
     for (let i = 0; i < size; i++) {
@@ -64,7 +64,7 @@ export default class DOMController {
     comment.classList.toggle("comment");
 
     playerName.textContent = "Player 1";
-    text.textContent = ' turn';
+    text.textContent = " turn";
     player.appendChild(playerName);
     player.appendChild(text);
     comment.textContent = "Click on any grid to play turn";
@@ -75,5 +75,64 @@ export default class DOMController {
 
     body.innerHTML = "";
     body.appendChild(gameScreen);
+  }
+
+  static renderPlaceShipScreen(size) {
+    const placeShipScreen = document.createElement("div");
+    const gameBoard = document.createElement("div");
+    const comment = document.createElement("div");
+    const buttonContainer = document.createElement("div");
+    const confirmBtn = document.createElement("button");
+    const resetBtn = document.createElement("button");
+
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        let grid = document.createElement("div");
+        grid.classList.toggle("grid");
+        grid.dataset.row = i;
+        grid.dataset.column = j;
+        gameBoard.appendChild(grid);
+      }
+    }
+
+    placeShipScreen.classList.toggle("place-ship-screen");
+    gameBoard.classList.toggle("game-board");
+    comment.classList.toggle("comment");
+    buttonContainer.classList.toggle("btn-cont");
+    confirmBtn.classList.toggle("confirm");
+    resetBtn.classList.toggle("reset");
+
+    comment.textContent = "Select any grid to place ship";
+    confirmBtn.textContent = "Confirm Placement";
+    resetBtn.textContent = "Reset";
+
+    buttonContainer.appendChild(confirmBtn);
+    buttonContainer.appendChild(resetBtn);
+
+    placeShipScreen.appendChild(gameBoard);
+    placeShipScreen.appendChild(comment);
+    placeShipScreen.appendChild(buttonContainer);
+
+    const body = document.querySelector("body");
+    body.innerHTML = "";
+    body.appendChild(placeShipScreen);
+  }
+
+  static renderGameBoard(gameBoardArray) {
+    const size = gameBoardArray.length;
+    const gameBoard = document.querySelector(".game-board");
+    gameBoard.innerHTML = '';
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        let grid = document.createElement("div");
+        grid.classList.toggle("grid");
+        if (gameBoardArray[i][j] === 0) grid.classList.toggle("miss");
+        else if (gameBoardArray[i][j] === 1) grid.classList.toggle("hit");
+        else if (typeof(gameBoardArray[i][j]) === 'object') grid.classList.toggle('ship');
+        grid.dataset.row = i;
+        grid.dataset.column = j;
+        gameBoard.appendChild(grid);
+      }
+    }
   }
 }
