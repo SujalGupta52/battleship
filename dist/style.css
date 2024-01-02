@@ -161,6 +161,14 @@ body {
   background-color: rgb(47, 47, 47);
 }
 
+.grid.green {
+  background-color: green;
+}
+
+.grid.red {
+  background-color: rgb(255, 0, 0);
+}
+
 .game-screen .player {
   font-family: "Comic-Font";
   font-size: 3rem;

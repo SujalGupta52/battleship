@@ -46,9 +46,9 @@ export default class DOMController {
     const text = document.createElement("span");
     const comment = document.createElement("div");
 
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        let grid = document.createElement("div");
+    for (let i = 0; i < size; i += 1) {
+      for (let j = 0; j < size; j += 1) {
+        const grid = document.createElement("div");
         grid.classList.toggle("grid");
         grid.dataset.row = i;
         grid.dataset.column = j;
@@ -85,9 +85,9 @@ export default class DOMController {
     const confirmBtn = document.createElement("button");
     const resetBtn = document.createElement("button");
 
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        let grid = document.createElement("div");
+    for (let i = 0; i < size; i += 1) {
+      for (let j = 0; j < size; j += 1) {
+        const grid = document.createElement("div");
         grid.classList.toggle("grid");
         grid.dataset.row = i;
         grid.dataset.column = j;
@@ -121,18 +121,65 @@ export default class DOMController {
   static renderGameBoard(gameBoardArray) {
     const size = gameBoardArray.length;
     const gameBoard = document.querySelector(".game-board");
-    gameBoard.innerHTML = '';
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        let grid = document.createElement("div");
+    gameBoard.innerHTML = "";
+    for (let i = 0; i < size; i += 1) {
+      for (let j = 0; j < size; j += 1) {
+        const grid = document.createElement("div");
         grid.classList.toggle("grid");
         if (gameBoardArray[i][j] === 0) grid.classList.toggle("miss");
         else if (gameBoardArray[i][j] === 1) grid.classList.toggle("hit");
-        else if (typeof(gameBoardArray[i][j]) === 'object') grid.classList.toggle('ship');
+        else if (typeof gameBoardArray[i][j] === "object")
+          grid.classList.toggle("ship");
         grid.dataset.row = i;
         grid.dataset.column = j;
         gameBoard.appendChild(grid);
       }
+    }
+  }
+
+  static addListenerGrid(type, handlerFunction) {
+    const gameBoard = document.querySelectorAll(".grid");
+    gameBoard.forEach((grid) => grid.addEventListener(type, handlerFunction));
+  }
+
+  static showValidPlacement(gameBoard, shipArray, coordinate, rotation) {
+    if (shipArray[shipArray.length - 1] === 0) shipArray.pop();
+    const size = shipArray.length;
+    const mid = Math.floor(size / 2);
+    document
+      .querySelectorAll(".grid.green")
+      .forEach((e) => e.classList.toggle("green"));
+    document
+      .querySelectorAll(".grid.red")
+      .forEach((e) => e.classList.toggle("red"));
+    if (gameBoard.checkValidPlacement(size, rotation, coordinate)) {
+      if (rotation === "h") {
+        for (
+          let i = coordinate[1] - mid;
+          i < coordinate[1] + (size - mid);
+          i += 1
+        ) {
+          document
+            .querySelector(`[data-row="${coordinate[0]}"][data-column="${i}"]`)
+            .classList.toggle("green");
+        }
+      } else {
+        for (
+          let i = coordinate[0] - mid;
+          i < coordinate[0] + (size - mid);
+          i += 1
+        ) {
+          document
+            .querySelector(`[data-row="${i}"][data-column="${coordinate[1]}"]`)
+            .classList.toggle("green");
+        }
+      }
+    } else {
+      document
+        .querySelector(
+          `[data-row="${coordinate[0]}"][data-column="${coordinate[1]}"]`
+        )
+        .classList.toggle("red");
     }
   }
 }
