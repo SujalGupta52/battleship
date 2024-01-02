@@ -35,7 +35,6 @@ export default class Gameboard {
     )
       return false;
 
-    let flag = false;
     if (rotation === "h") {
       if (coordinate[1] - mid < 0 || coordinate[1] + (size - mid) > this.size)
         return false;
@@ -58,7 +57,7 @@ export default class Gameboard {
         i < coordinate[0] + (size - mid);
         i += 1
       ) {
-        if (typeof this.gameboardArray[i][coordinate[0]] === "object") return false;
+        if (typeof this.gameboardArray[i][coordinate[1]] === "object") return false;
       }
     }
 
@@ -84,7 +83,7 @@ export default class Gameboard {
           i < coordinate[0] + (size - mid);
           i += 1
         ) {
-          this.gameboardArray[i][coordinate[0]] = ship;
+          this.gameboardArray[i][coordinate[1]] = ship;
         }
       }
     }
