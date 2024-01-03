@@ -22,6 +22,7 @@ export default class DOMController {
     startButton.textContent = "Start Game";
     checkbox.type = "checkbox";
     checkbox.id = "play-ai";
+    checkbox.checked = true;
     checkBoxText.textContent = "Play with AI?";
 
     checkboxContainer.appendChild(checkbox);
@@ -102,7 +103,8 @@ export default class DOMController {
     confirmBtn.classList.toggle("confirm");
     resetBtn.classList.toggle("reset");
 
-    comment.textContent = "Select any grid to place ship";
+    comment.innerHTML =
+      '<span class="player-name">Player 1</span> Select any grid to place ship';
     confirmBtn.textContent = "Confirm Placement";
     resetBtn.textContent = "Reset";
 
@@ -118,7 +120,7 @@ export default class DOMController {
     body.appendChild(placeShipScreen);
   }
 
-  static renderGameBoard(gameBoardArray) {
+  static renderGameBoard(gameBoardArray, hidden = false) {
     const size = gameBoardArray.length;
     const gameBoard = document.querySelector(".game-board");
     gameBoard.innerHTML = "";
@@ -129,7 +131,7 @@ export default class DOMController {
         if (gameBoardArray[i][j] === 0) grid.classList.toggle("miss");
         else if (gameBoardArray[i][j] === 1) grid.classList.toggle("hit");
         else if (typeof gameBoardArray[i][j] === "object")
-          grid.classList.toggle("ship");
+          if (!hidden) grid.classList.toggle("ship");
         grid.dataset.row = i;
         grid.dataset.column = j;
         gameBoard.appendChild(grid);
@@ -142,9 +144,7 @@ export default class DOMController {
     gameBoard.forEach((grid) => grid.addEventListener(type, handlerFunction));
   }
 
-  static showValidPlacement(gameBoard, shipArray, coordinate, rotation) {
-    if (shipArray[shipArray.length - 1] === 0) shipArray.pop();
-    const size = shipArray.length;
+  static showValidPlacement(gameBoard, size, coordinate, rotation) {
     const mid = Math.floor(size / 2);
     document
       .querySelectorAll(".grid.green")
