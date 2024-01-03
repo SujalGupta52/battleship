@@ -44,7 +44,8 @@ export default class Gameboard {
         i < coordinate[1] + (size - mid);
         i += 1
       ) {
-        if (typeof this.gameboardArray[coordinate[0]][i] === "object") return false;
+        if (typeof this.gameboardArray[coordinate[0]][i] === "object")
+          return false;
       }
     }
 
@@ -57,7 +58,8 @@ export default class Gameboard {
         i < coordinate[0] + (size - mid);
         i += 1
       ) {
-        if (typeof this.gameboardArray[i][coordinate[1]] === "object") return false;
+        if (typeof this.gameboardArray[i][coordinate[1]] === "object")
+          return false;
       }
     }
 
@@ -86,7 +88,9 @@ export default class Gameboard {
           this.gameboardArray[i][coordinate[1]] = ship;
         }
       }
+      return true;
     }
+    return false;
   }
 
   receiveHit(coordinate) {
@@ -117,5 +121,30 @@ export default class Gameboard {
       i += 1;
     }
     return true;
+  }
+
+  autoPlaceShip(shipArray) {
+    const temp = [...shipArray];
+    let row = Math.floor(Math.random() * (this.size - 0)) + 0;
+    let column = Math.floor(Math.random() * (this.size - 0)) + 0;
+    let rotation = Math.floor(Math.random() * (10 - 0)) + 0 < 5 ? "h" : "v";
+    while (temp.length !== 0) {
+      while (!this.placeShip(temp.length, rotation, [row, column])) {
+        row = Math.floor(Math.random() * (this.size - 0)) + 0;
+        column = Math.floor(Math.random() * (this.size - 0)) + 0;
+        rotation = Math.floor(Math.random() * (10 - 0)) + 0 < 5 ? "h" : "v";
+      }
+      temp[temp.length - 1] -= 1;
+      if (temp[temp.length - 1] === 0) temp.pop();
+    }
+  }
+
+  autoHit() {
+    let row = Math.floor(Math.random() * (this.size - 0)) + 0;
+    let column = Math.floor(Math.random() * (this.size - 0)) + 0;
+    while (this.receiveHit([row, column]) === "invalid") {
+      row = Math.floor(Math.random() * (this.size - 0)) + 0;
+      column = Math.floor(Math.random() * (this.size - 0)) + 0;
+    }
   }
 }
