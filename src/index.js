@@ -7,7 +7,7 @@ let player2 = new GameBoard(10);
 
 let ai = false;
 let rotation = "h";
-const shipArray = [2];
+const shipArray = [2, 1, 1, 1, 1];
 let temp = [...shipArray]; // index + 1 = size of ship, value = no of ship
 let currentPlayer = player1;
 startGame();
